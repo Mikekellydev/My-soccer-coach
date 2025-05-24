@@ -1,29 +1,23 @@
 workflows:
   ios-build:
-    name: iOS Debug Build
+    name: iOS Unsigned Debug Build
     max_build_duration: 30
     environment:
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.example.SoccerCoachApp
+      xcode: latest
       vars:
-        XCODE_WORKSPACE: SoccerCoachApp.xcodeproj
+        XCODE_PROJECT: SoccerCoachApp.xcodeproj
         XCODE_SCHEME: SoccerCoachApp
     scripts:
-      - name: Set up keychain
+      - name: Build the app without signing
         script: |
-          security create-keychain -p "password" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "password" build.keychain
-          security set-keychain-settings
-      - name: Build the app
-        script: |
-          xcodebuild build \
-            -project "$XCODE_WORKSPACE" \
+          xcodebuild clean build \
+            -project "$XCODE_PROJECT" \
             -scheme "$XCODE_SCHEME" \
             -sdk iphoneos \
             -configuration Debug \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
     artifacts:
       - build/Debug-iphoneos/*.app
       - build/Debug-iphoneos/*.ipa
