@@ -5,8 +5,8 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       vars:
-        XCODE_PROJECT: "MySoccerCoachApp.xcodeproj"
-        XCODE_SCHEME: "MySoccerCoachApp"
+        XCODE_PROJECT: "SoccerCoachApp.xcodeproj"
+        XCODE_SCHEME: "SoccerCoachApp"
         BUNDLE_ID: "com.example.SoccerCoachApp"
       xcode: 15.0
     scripts:
